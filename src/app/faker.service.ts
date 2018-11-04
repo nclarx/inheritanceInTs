@@ -3,10 +3,17 @@ import * as faker from 'faker';
 import {IPerson, Person} from './entities/person';
 import {ITeacher, Teacher} from './entities/teacher';
 
+import {of} from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class FakerService {
+
+  numberOfPeopleToGenerate = 10;
+  peopleList: Array<IPerson> = [];
+  teacherList: Array<ITeacher> = [];
+
   static generatePerson(): IPerson {
     return new Person({
       id: faker.random.uuid(),
@@ -44,18 +51,23 @@ export class FakerService {
     });
   }
 
-  numberOfPeopleToGenerate: number = 10;
-  peopleList: Array<IPerson> = [];
-  teacherList: Array<ITeacher> = [];
-
   constructor() {
     for (let i = 0; i < this.numberOfPeopleToGenerate; i++) {
       this.peopleList.push(FakerService.generatePerson());
       this.teacherList.push(FakerService.generateTeacher());
     }
+
+    const $pplList = of(this.peopleList);
+    $pplList
+    .subscribe((data) => {
+      console.log(data);
+    });
+
     console.groupCollapsed('Generated Data ====================');
-    console.log('People List: ', this.peopleList);
-    console.log('Teacher List: ', this.teacherList);
+    console.log('People entities: ');
+    console.table(this.peopleList);
+    console.log('Teacher entities: ');
+    console.table(this.teacherList);
     console.groupEnd();
   }
 }

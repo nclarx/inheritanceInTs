@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FakerService} from "./faker.service";
+import {FakerService} from './faker.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +7,8 @@ import {FakerService} from "./faker.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private fakerService: FakerService){
+  constructor(private fakerService: FakerService) {
 
   }
-  title = 'app';
+  title = 'Inheritance in Typescript';
 }
